@@ -24,11 +24,11 @@ module.exports = app => {
 
       queryOpt.where = whereOpt
 
-      let articles = yield this.app.models.Article.findAll(queryOpt)
+      let articles = yield this.app.models.article.findAll(queryOpt)
       return articles
     }
     * full(type) {
-      let articles = yield this.app.models.Article.findAll({
+      let articles = yield this.app.models.article.findAll({
         where: {
           type: type
         }
@@ -36,11 +36,11 @@ module.exports = app => {
       return articles
     }
     * detail(id) {
-      let article = yield this.app.models.Article.findById(id)
+      let article = yield this.app.models.article.findById(id)
       return article
     }
     * readbytag(tag) {
-      let articles = yield this.app.models.Article.findAll({
+      let articles = yield this.app.models.article.findAll({
         where: {
           tag: tag,
           status: 1
@@ -49,7 +49,7 @@ module.exports = app => {
       return articles
     }
     * taggroup() {
-      let tags = yield this.app.models.Article.findAll({
+      let tags = yield this.app.models.article.findAll({
         attributes: [
           ['tag', 'tagName'],
           [this.app.models.sequelize.fn('count', 'tag'), 'count']
@@ -62,7 +62,7 @@ module.exports = app => {
       return tags
     }
     * archive() {
-      let articles = yield this.app.models.Article.findAll({
+      let articles = yield this.app.models.article.findAll({
         attributes: [
           'id',
           'title',
@@ -97,7 +97,7 @@ module.exports = app => {
       let md = postData.content
       let html = markdown.makeHtml(md)
 
-      let article = yield this.app.models.Article.create({
+      let article = yield this.app.models.article.create({
         type: postData.type,
         tag: postData.tag,
         title: postData.title,
@@ -112,7 +112,7 @@ module.exports = app => {
       let md = postData.content
       let html = markdown.makeHtml(md)
 
-      let article = yield this.app.models.Article.update({
+      let article = yield this.app.models.article.update({
         title: postData.title,
         content: html,
         markdown: md.replace(/&/g, "&amp;"),
@@ -126,7 +126,7 @@ module.exports = app => {
       return article
     }
     * remove(postData) {
-      let article = yield this.app.models.Article.update({
+      let article = yield this.app.models.article.update({
         status: 2
       }, {
         where: {

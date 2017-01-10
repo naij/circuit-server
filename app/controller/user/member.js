@@ -24,7 +24,7 @@ exports.login = function*() {
   // 密码md5加密一下
   password = this.helper.md5(password).substring(0, 8)
 
-  var user = yield this.service.member.userInfo(nickname)
+  var user = yield this.service.user.member.userInfo(nickname)
 
   if (!user) {
     return this.renderJSON({

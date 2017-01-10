@@ -10,7 +10,7 @@ function upload(client, path, file, cb) {
 }
 
 exports.list = function*() {
-  let pics = yield this.service.pic.list()
+  let pics = yield this.service.tool.pic.list()
   return this.renderJSON({
     code: 200,
     data: pics
@@ -37,7 +37,7 @@ exports.create = function*() {
   var size = images(picPath).size()
 
   // 保存到数据库
-  var pic = yield this.service.pic.create({
+  var pic = yield this.service.tool.pic.create({
     picPath: '/c/' + picName,
     picSize: size.width + 'x' + size.height
   })

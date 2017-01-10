@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function(sequelize, DataTypes) {
-  let Tag = sequelize.define('Tag', {
+  return sequelize.define('tag', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -13,5 +13,4 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: true,
     underscored: false
   })
-  return Tag
 }

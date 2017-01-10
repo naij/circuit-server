@@ -21,17 +21,13 @@ module.exports = app => {
     }
   )
   let models = {sequelize}
+  let modelsPath = path.join(__dirname, '../models')
 
-  fs.readdir(path.join(__dirname, '../models'), (err, files) => {
+  fs.readdir(modelsPath, (err, files) => {
     files.forEach(file => {
-      let model = sequelize['import'](path.join(__dirname, '../models', file))
+      let filePath = path.join(modelsPath, file)
+      let model = sequelize['import'](filePath)
       models[model.name] = model
-    })
-
-    Object.keys(models).forEach(modelName => {
-      if ('associate' in models[modelName]) {
-        models[modelName].associate(models)
-      }
     })
   })
 

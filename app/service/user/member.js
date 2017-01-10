@@ -8,7 +8,7 @@ module.exports = app => {
       super(ctx)
     }
     * userInfo(nickname) {
-      let user = yield this.app.models.User.find({
+      let user = yield this.app.models.user.find({
         where: {
           nickname: nickname
         }
