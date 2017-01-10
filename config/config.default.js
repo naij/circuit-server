@@ -48,9 +48,9 @@ exports.notfound = {
  */
 exports.auth = {
   unInterceptUrls: [
-    '/api/pubinfo.json',
-    '/api/login.json',
-    '/api/logout.json',
+    '/api/user/pubinfo.json',
+    '/api/user/login.json',
+    '/api/user/logout.json',
   ]
 }
 
