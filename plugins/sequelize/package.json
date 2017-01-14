@@ -1,0 +1,12 @@
+{
+  "name": "sequelize",
+  "version": "0.0.1",
+  "description": "初始化sequelize",
+  "eggPlugin": {
+    "name": "sequelize"
+  },
+  "files": [
+    "app",
+    "app.js"
+  ]
+}

@@ -5,7 +5,7 @@ const pluginsDir = path.join(__dirname, '../plugins')
 
 exports.static = true
 
-// exports.upyun = {
-//   enable: true,
-//   path: path.join(pluginsDir, 'upyun')
-// }
+exports.sequelize = {
+  enable: true,
+  path: path.join(pluginsDir, 'sequelize')
+}

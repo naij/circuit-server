@@ -8,7 +8,7 @@ module.exports = app => {
       super(ctx)
     }
     * list() {
-      let tags = yield this.app.models.tag.findAll()
+      let tags = yield this.ctx.models.tag.findAll()
 
       return tags
     }

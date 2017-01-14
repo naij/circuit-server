@@ -1,5 +1,13 @@
 'use strict'
 
+/**
+ * sequelize 初始化
+ */
+
+
+/**
+ * Module dependencies.
+ */
 let fs = require('fs')
 let path = require('path')
 let chalk = require('chalk')
@@ -16,12 +24,12 @@ module.exports = app => {
       dialect: config.dialect,
       port: config.port,
       logging: function(msg) {
-        console.log(chalk.green(msg))
+        app.logger.info(chalk.green(msg))
       }
     }
   )
   let models = {sequelize}
-  let modelsPath = path.join(__dirname, '../models')
+  let modelsPath = path.join(app.baseDir, 'app/models')
 
   fs.readdir(modelsPath, (err, files) => {
     files.forEach(file => {
@@ -31,7 +39,7 @@ module.exports = app => {
     })
   })
 
-  Object.defineProperty(app, 'models', {
+  Object.defineProperty(app.context, 'models', {
     get: function() {
       return models
     }

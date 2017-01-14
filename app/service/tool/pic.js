@@ -8,12 +8,12 @@ module.exports = app => {
       super(ctx)
     }
     * list() {
-      let pics = yield this.app.models.pic.findAll()
+      let pics = yield this.ctx.models.pic.findAll()
 
       return pics
     }
     * create(picPath, picSize) {
-      let pic = yield this.app.models.pic.create({
+      let pic = yield this.ctx.models.pic.create({
         picPath: picPath,
         picSize: picSize
       })
