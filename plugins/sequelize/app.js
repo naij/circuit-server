@@ -15,19 +15,17 @@ let Sequelize = require('sequelize')
 
 module.exports = app => {
   let config = app.config.database
-  let sequelize = new Sequelize(
-    config.database,
-    process.env.MYSQL_USERNAME,
-    process.env.MYSQL_PASSWORD,
-    {
-      host: config.host,
-      dialect: config.dialect,
-      port: config.port,
-      logging: function(msg) {
-        app.logger.info(chalk.green(msg))
-      }
+  let database = config.database
+  let username = process.env.MYSQL_USERNAME
+  let password = process.env.MYSQL_PASSWORD
+  let sequelize = new Sequelize(database, username, password, {
+    host: config.host,
+    dialect: config.dialect,
+    port: config.port,
+    logging: function(msg) {
+      app.logger.info(chalk.green(msg))
     }
-  )
+  })
   let models = {sequelize}
   let modelsPath = path.join(app.baseDir, 'app/models')
 
