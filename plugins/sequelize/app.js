@@ -39,7 +39,7 @@ module.exports = app => {
     })
   })
 
-  Object.defineProperty(app.context, 'models', {
+  Object.defineProperty(app, 'models', {
     get: function() {
       return models
     }
