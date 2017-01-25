@@ -7,7 +7,7 @@ function admin(app) {
   app.get('/api/blog/tag/list.json', app.controller.blog.tag.list)
   app.get('/api/blog/article/full.json', app.controller.blog.article.full)
   app.post('/api/blog/article/create.json', app.controller.blog.article.create)
-  app.post('/api/blog/article/update.json.json', app.controller.blog.article.update)
+  app.post('/api/blog/article/update.json', app.controller.blog.article.update)
   app.post('/api/blog/article/remove.json', app.controller.blog.article.remove)
   app.get('/api/tool/pic/list.json', app.controller.tool.pic.list)
   app.post('/api/tool/pic/create.json', app.controller.tool.pic.create)
