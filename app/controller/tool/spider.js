@@ -62,7 +62,7 @@ exports.spider = function*() {
       html = yield Spider.get(originUrl)
     } catch (err) {
       this.app.loggers.logger.error('err_spider_get:' + err.stack)
-      // this.unsafeRedirect(originUrl)
+      this.unsafeRedirect(originUrl)
     }
 
     if (html) {
@@ -74,29 +74,29 @@ exports.spider = function*() {
         html: html
       })
     } else {
-      // this.unsafeRedirect(originUrl)
+      this.unsafeRedirect(originUrl)
     }
   }
 
-  // recordModel = yield this.service.tool.spider.getRecord({
-  //   appId: app.id,
-  //   htmlId: htmlModel.id,
-  //   spiderName: spiderName
-  // })
+  recordModel = yield this.service.tool.spider.getRecord({
+    appId: app.id,
+    htmlId: htmlModel.id,
+    spiderName: spiderName
+  })
 
-  // if (recordModel) {
-  //   yield this.service.tool.spider.updateRecord({
-  //     id: recordModel.id,
-  //     count: ++recordModel.count
-  //   })
-  // } else {
-  //   yield this.service.tool.spider.createRecord({
-  //     appId: app.id,
-  //     htmlId: htmlModel.id,
-  //     url: originUrl,
-  //     spiderName: spiderName
-  //   })
-  // }
+  if (recordModel) {
+    yield this.service.tool.spider.updateRecord({
+      id: recordModel.id,
+      count: ++recordModel.count
+    })
+  } else {
+    yield this.service.tool.spider.createRecord({
+      appId: app.id,
+      htmlId: htmlModel.id,
+      url: originUrl,
+      spiderName: spiderName
+    })
+  }
 }
 
 exports.table = function *() {
