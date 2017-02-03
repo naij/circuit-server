@@ -49,7 +49,7 @@ exports.spider = function*() {
     return
   }
 
-  htmlModel = yield this.service.tool.spider.getHTML(originUrl)
+  htmlModel = yield this.service.tool.spider.getHTMLByUrl(originUrl)
 
   if (htmlModel) {
     this.body = htmlModel.html
@@ -101,4 +101,10 @@ exports.list = function *() {
     code: 200,
     data: list
   })
+}
+
+exports.cache = function *() {
+  let id = this.query.htmlid
+  let htmlModel = yield this.service.tool.spider.getHTMLById(id)
+  this.body = htmlModel.html
 }

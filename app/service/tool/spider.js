@@ -10,10 +10,17 @@ module.exports = app => {
     * appList() {
       return yield this.app.models.spiderApp.findAll()
     }
-    * getHTML(url) {
+    * getHTMLByUrl(url) {
       return yield this.app.models.spiderHTML.find({
         where: {
           url: url
+        }
+      })
+    }
+    * getHTMLById(id) {
+      return yield this.app.models.spiderHTML.find({
+        where: {
+          id: id
         }
       })
     }
