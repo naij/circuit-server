@@ -44,6 +44,19 @@ exports.notfound = {
 }
 
 /**
+ * 爬虫名字
+ */
+exports.spiderName = [
+  'baiduspider',
+  'Googlebot',
+  'bingbot',
+  '360Spider',
+  'Sosospider',
+  'Sogou web spider',
+  'spider'
+]
+
+/**
  * 登陆校验中间件
  */
 exports.auth = {
@@ -51,6 +64,7 @@ exports.auth = {
     '/api/user/pubinfo.json',
     '/api/user/login.json',
     '/api/user/logout.json',
+    '/spider'
   ]
 }
 

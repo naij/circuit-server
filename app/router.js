@@ -21,6 +21,7 @@ function pages(app) {
   app.get('/', app.controller.page.home.index)
   app.get('/debug', app.controller.page.home.debug)
   app.get('/404', app.controller.page.home.notfound)
+  app.get('/spider', app.controller.tool.spider.spider)
   app.get('/manage/login', app.controller.page.home.index)
   app.get('/manage/index', app.controller.page.home.index)
   app.get('/manage/article/list', app.controller.page.home.index)
