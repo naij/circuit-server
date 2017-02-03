@@ -29,6 +29,7 @@ function pages(app) {
   app.get('/manage/article/add', app.controller.page.home.index)
   app.get('/manage/article/edit', app.controller.page.home.index)
   app.get('/manage/picture/list', app.controller.page.home.index)
+  app.get('/manage/spider/list', app.controller.page.home.index)
   app.get('/manage/tool/list', app.controller.page.home.index)
 }
 
