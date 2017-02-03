@@ -25,17 +25,17 @@ module.exports = app => {
       })
     }
     * getRecord(opt) {
-      let whereOpt = {
-        htmlId: opt.htmlId,
-        spiderName: opt.spiderName
-      }
-
-      if (opt.appId) {
-        whereOpt.appId = opt.appId
-      }
-
+      return yield this.app.models.spiderRecord.find({
+        where: {
+          appId: opt.appId,
+          htmlId: opt.htmlId,
+          spiderName: opt.spiderName
+        }
+      })
+    }
+    * getRecordList() {
       return yield this.app.models.spiderRecord.findAll({
-        where: whereOpt
+        order: 'createdAt DESC'
       })
     }
     * updateRecord(opt) {

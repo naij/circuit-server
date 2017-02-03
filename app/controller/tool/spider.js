@@ -33,10 +33,6 @@ exports.spider = function*() {
   let htmlModel
   let recordModel
 
-  this.app.loggers.logger.info('originUrl:' + originUrl)
-  this.app.loggers.logger.info('ua:' + ua)
-  this.app.loggers.logger.info('spiderName:' + spiderName)
-
   if (_.isUndefined(spiderName)) {
     this.app.loggers.logger.info('wrong1:' + originUrl + '-->' + ua)
     this.unsafeRedirect(originUrl)
@@ -99,20 +95,10 @@ exports.spider = function*() {
   }
 }
 
-exports.table = function *() {
-  // let data = {
-  //   applications: yield Application.unscoped().findAll(),
-  //   htmlContents: yield HtmlContent.findAll({
-  //     order: [['id', 'DESC']],
-  //     limit: 30
-  //   }),
-  //   records: yield Record.findAll({
-  //     include: [{model: HtmlContent, attributes: ["id", "url"], as: 'htmlContent'}],
-  //     order: [['id', 'DESC']],
-  //     limit: 30
-  //   }),
-  //   date: date
-  // };
-
-  // yield  this.render('main/table.html', data)
+exports.list = function *() {
+  let list = yield this.service.tool.spider.getRecordList()
+  return this.renderJSON({
+    code: 200,
+    data: list
+  })
 }
