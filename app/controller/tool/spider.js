@@ -96,10 +96,18 @@ exports.spider = function*() {
 }
 
 exports.list = function *() {
-  let list = yield this.service.tool.spider.getRecordList()
+  let pageNo = parseInt(this.query.pageNo) || 1
+  let pageSize = parseInt(this.query.pageSize) || 50
+  let list = yield this.service.tool.spider.getRecordList({
+    pageNo: pageNo,
+    pageSize: pageSize
+  })
   return this.renderJSON({
     code: 200,
-    data: list
+    data: {
+      list: list.rows,
+      totalCount: list.count
+    }
   })
 }
 

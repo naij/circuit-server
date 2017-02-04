@@ -2,7 +2,6 @@
 
 // 后台接口
 function admin(app) {
-  app.get('/api/blog/article/list.json', app.controller.blog.article.list)
   app.get('/api/blog/article/detail.json', app.controller.blog.article.detail)
   app.get('/api/blog/tag/list.json', app.controller.blog.tag.list)
   app.get('/api/blog/article/actived_list.json', app.controller.blog.article.activedList)

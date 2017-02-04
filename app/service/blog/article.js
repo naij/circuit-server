@@ -8,101 +8,34 @@ module.exports = app => {
     constructor(ctx) {
       super(ctx)
     }
-    * list(opt) {
-      let queryOpt = {}
-      let whereOpt = {
-        status: 1
-      }
-
-      if (opt.type) {
-        whereOpt.type = opt.type
-      }
-
-      if (opt.limit) {
-        queryOpt.limit = opt.limit
-      }
-
-      queryOpt.where = whereOpt
-
-      let articles = yield this.app.models.article.findAll(queryOpt)
-      return articles
-    }
-    * activedList(type) {
-      let articles = yield this.app.models.article.findAll({
+    * activedList(opt) {
+      let articles = yield this.app.models.article.findAndCountAll({
         where: {
-          type: type,
+          type: opt.type,
           status: {
             '$ne': 2
           }
-        }
+        },
+        order: 'createdAt DESC',
+        limit: opt.pageSize,
+        offset: opt.pageSize * (opt.pageNo - 1)
       })
       return articles
     }
-    * removedList() {
-      let articles = yield this.app.models.article.findAll({
+    * removedList(opt) {
+      let articles = yield this.app.models.article.findAndCountAll({
         where: {
           status: 2
-        }
+        },
+        order: 'updatedAt DESC',
+        limit: opt.pageSize,
+        offset: opt.pageSize * (opt.pageNo - 1)
       })
       return articles
     }
     * detail(id) {
       let article = yield this.app.models.article.findById(id)
       return article
-    }
-    * readbytag(tag) {
-      let articles = yield this.app.models.article.findAll({
-        where: {
-          tag: tag,
-          status: 1
-        }
-      })
-      return articles
-    }
-    * taggroup() {
-      let tags = yield this.app.models.article.findAll({
-        attributes: [
-          ['tag', 'tagName'],
-          [this.app.models.sequelize.fn('count', 'tag'), 'count']
-        ],
-        where: {
-          status: 1
-        },
-        group: ['tag']
-      })
-      return tags
-    }
-    * archive() {
-      let articles = yield this.app.models.article.findAll({
-        attributes: [
-          'id',
-          'title',
-          'type',
-          [this.app.models.sequelize.fn('date_format', this.app.models.sequelize.col('createdAt'), '%Y-%m'), 'ym']
-        ],
-        where: {
-          status: 1
-        },
-        raw: true
-      })
-
-      let archiveList = []
-      for (let i = 0; i < articles.length;) {
-        let count = 0
-        let obj = {
-          ym: articles[i].ym,
-          list: []
-        }
-        for (let j = i; j < articles.length; j++) {
-          if (articles[i].ym == articles[j].ym) {
-            obj.list.push(articles[j])
-            count ++
-          }
-        }
-        archiveList.push(obj)
-        i += count
-      }
-      return archiveList
     }
     * create(postData) {
       let md = postData.content

@@ -15,7 +15,8 @@ module.exports = app => {
             '$gte': opt.startTime,
             '$lte': opt.endTime
           }
-        }
+        },
+        order: 'createdAt DESC'
       })
 
       _.each(pics, item => {

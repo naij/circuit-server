@@ -40,9 +40,11 @@ module.exports = app => {
         }
       })
     }
-    * getRecordList() {
-      return yield this.app.models.spiderRecord.findAll({
-        order: 'createdAt DESC'
+    * getRecordList(opt) {
+      return yield this.app.models.spiderRecord.findAndCountAll({
+        order: 'createdAt DESC',
+        limit: opt.pageSize,
+        offset: opt.pageSize * (opt.pageNo - 1)
       })
     }
     * updateRecord(opt) {

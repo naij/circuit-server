@@ -2,29 +2,37 @@
 
 let _ = require('lodash')
 
-exports.list = function*() {
-  let type = this.query.type
-  let articles = yield this.service.blog.article.list({type: type})
-  return this.renderJSON({
-    code: 200,
-    data: articles
-  })
-}
-
 exports.activedList = function*() {
   let type = this.query.type
-  let articles = yield this.service.blog.article.activedList(type)
+  let pageNo = parseInt(this.query.pageNo) || 1
+  let pageSize = parseInt(this.query.pageSize) || 50
+  let articles = yield this.service.blog.article.activedList({
+    type: type,
+    pageNo: pageNo,
+    pageSize: pageSize
+  })
   return this.renderJSON({
     code: 200,
-    data: articles
+    data: {
+      list: articles.rows,
+      totalCount: articles.count
+    }
   })
 }
 
 exports.removedList = function*() {
-  let articles = yield this.service.blog.article.removedList()
+  let pageNo = parseInt(this.query.pageNo) || 1
+  let pageSize = parseInt(this.query.pageSize) || 50
+  let articles = yield this.service.blog.article.removedList({
+    pageNo: pageNo,
+    pageSize: pageSize
+  })
   return this.renderJSON({
     code: 200,
-    data: articles
+    data: {
+      list: articles.rows,
+      totalCount: articles.count
+    }
   })
 }
 
@@ -34,15 +42,6 @@ exports.detail = function*() {
   return this.renderJSON({
     code: 200,
     data: article
-  })
-}
-
-exports.readbytag = function*() {
-  let tag = this.query.tag
-  let articles = yield this.service.blog.article.readbytag(tag)
-  return this.renderJSON({
-    code: 200,
-    data: articles
   })
 }
 
