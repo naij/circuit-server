@@ -28,8 +28,8 @@
     "thunkify": "^2.1.2",
     "upyun": "^2.0.4",
     "chalk": "^1.1.1",
-    "rss": "^1.2.1",
-    "spider-spa": "^1.0.5"
+    "spider-spa": "^1.0.5",
+    "stream-wormhole": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^3.11.1",

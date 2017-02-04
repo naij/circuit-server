@@ -1,12 +1,12 @@
 'use strict'
 
-var path     = require('path')
-var fs       = require('mz/fs')
-var images   = require("images")
-var thunkify = require('thunkify')
+let path     = require('path')
+let images   = require("images")
+let thunkify = require('thunkify')
+let sendToWormhole = require('stream-wormhole')
 
 function upload(client, path, file, cb) {
-  client.putFile(path, file, cb)
+  client.putFile(path, file, null, null, null, cb)
 }
 
 exports.list = function*() {
@@ -18,32 +18,29 @@ exports.list = function*() {
 }
 
 exports.create = function*() {
-  var body = this.request.body
-  console.log(body)
-  return this.renderJSON({
-    code: 200
-  })
-  var picPath = body.files.pic.path
-  var picName = picPath.split('/')[1]
-  picPath = path.resolve(picPath)
+  let stream = yield this.getFileStream()
+  let filename = stream.filename
+  let picName = this.helper.md5(filename) + path.extname(filename)
+  // stream 转换为 buffer
+  let buffer = yield this.helper.streamToBuffer(stream)
 
-  // 读取上传的临时文件
-  var file = yield fs.readFile(picPath)
-
-  // 上传到upyun
-  var upyunInfo = yield thunkify(upload)(this.upyunClient, '/c/' + picName, file)
+  try {
+    // 上传到upyun
+    yield thunkify(upload)(this.upyunClient, '/c/' + picName, buffer)
+  } catch(e) {
+    this.app.loggers.logger.error('upyun upload error:' + e)
+    // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
+    yield sendToWormhole(stream)
+  }
 
   // 获取图片尺寸
-  var size = images(picPath).size()
+  let size = images(buffer).size()
 
   // 保存到数据库
-  var pic = yield this.service.tool.pic.create({
+  yield this.service.tool.pic.create({
     picPath: '/c/' + picName,
     picSize: size.width + 'x' + size.height
   })
-
-  // 删除临时文件
-  yield fs.unlink(picPath)
 
   return this.renderJSON({
     code: 200

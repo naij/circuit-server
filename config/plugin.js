@@ -9,3 +9,8 @@ exports.sequelize = {
   enable: true,
   path: path.join(pluginsDir, 'sequelize')
 }
+
+exports.upyun = {
+  enable: true,
+  path: path.join(pluginsDir, 'upyun')
+}

@@ -36,6 +36,14 @@ exports.database = {
 }
 
 /**
+ * upyun 上传目录
+ */
+exports.upyun = {
+  bucket: 'kiwipics',
+  prefix: 'http://kiwipics.b0.upaiyun.com'
+}
+
+/**
  * 404页面配置
  */
 exports.notfound = {

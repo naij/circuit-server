@@ -1,0 +1,12 @@
+{
+  "name": "upyun",
+  "version": "0.0.1",
+  "description": "初始化upyun",
+  "eggPlugin": {
+    "name": "upyun"
+  },
+  "files": [
+    "app",
+    "app.js"
+  ]
+}
