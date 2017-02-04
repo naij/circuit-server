@@ -27,10 +27,21 @@ module.exports = app => {
       let articles = yield this.app.models.article.findAll(queryOpt)
       return articles
     }
-    * full(type) {
+    * activedList(type) {
       let articles = yield this.app.models.article.findAll({
         where: {
-          type: type
+          type: type,
+          status: {
+            '$ne': 2
+          }
+        }
+      })
+      return articles
+    }
+    * removedList() {
+      let articles = yield this.app.models.article.findAll({
+        where: {
+          status: 2
         }
       })
       return articles
@@ -129,6 +140,14 @@ module.exports = app => {
       let article = yield this.app.models.article.update({
         status: 2
       }, {
+        where: {
+          id: postData.id
+        }
+      })
+      return article
+    }
+    * removeComplete(postData) {
+      let article = yield this.app.models.article.destroy({
         where: {
           id: postData.id
         }

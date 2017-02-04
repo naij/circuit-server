@@ -7,9 +7,16 @@ module.exports = app => {
     constructor(ctx) {
       super(ctx)
     }
-    * list() {
+    * list(opt) {
       let config = this.app.config.upyun
-      let pics = yield this.app.models.pic.findAll()
+      let pics = yield this.app.models.pic.findAll({
+        where: {
+          createdAt: {
+            '$gte': opt.startTime,
+            '$lte': opt.endTime
+          }
+        }
+      })
 
       _.each(pics, item => {
         item.picPath = config.prefix + item.picPath

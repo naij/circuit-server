@@ -1,8 +1,9 @@
 'use strict'
 
 let path     = require('path')
-let images   = require("images")
+let images   = require('images')
 let thunkify = require('thunkify')
+let Moment   = require('moment')
 let sendToWormhole = require('stream-wormhole')
 
 function upload(client, path, file, cb) {
@@ -10,7 +11,14 @@ function upload(client, path, file, cb) {
 }
 
 exports.list = function*() {
-  let pics = yield this.service.tool.pic.list()
+  let startTime = this.query.startTime
+  let endTime = this.query.endTime
+  startTime = Moment(startTime).format('YYYY-MM-DD')
+  endTime = Moment(endTime).add(1, 'd').format('YYYY-MM-DD')
+  let pics = yield this.service.tool.pic.list({
+    startTime: startTime,
+    endTime: endTime
+  })
   return this.renderJSON({
     code: 200,
     data: pics

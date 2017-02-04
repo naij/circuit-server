@@ -11,9 +11,17 @@ exports.list = function*() {
   })
 }
 
-exports.full = function*() {
+exports.activedList = function*() {
   let type = this.query.type
-  let articles = yield this.service.blog.article.full(type)
+  let articles = yield this.service.blog.article.activedList(type)
+  return this.renderJSON({
+    code: 200,
+    data: articles
+  })
+}
+
+exports.removedList = function*() {
+  let articles = yield this.service.blog.article.removedList()
   return this.renderJSON({
     code: 200,
     data: articles
@@ -65,6 +73,18 @@ exports.update = function*() {
 exports.remove = function*() {
   let postData = this.request.body
   let article = yield this.service.blog.article.remove(postData)
+
+  return this.renderJSON({
+    code: 200,
+    data: {
+      id: article.id
+    }
+  })
+}
+
+exports.removeComplete = function*() {
+  let postData = this.request.body
+  let article = yield this.service.blog.article.removeComplete(postData)
 
   return this.renderJSON({
     code: 200,
