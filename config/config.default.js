@@ -65,10 +65,20 @@ exports.spiderName = [
 ]
 
 /**
+ * csrf校验过滤器
+ */
+exports.security = {
+  csrf: {
+    ignore: '/api/tool/assets'
+  }
+}
+
+/**
  * 登陆校验中间件
  */
 exports.auth = {
   unInterceptUrls: [
+    '/api/tool/assets/build.json',
     '/api/user/pubinfo.json',
     '/api/user/login.json',
     '/api/user/logout.json',

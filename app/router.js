@@ -13,6 +13,8 @@ function admin(app) {
   app.get('/api/tool/pic/list.json', app.controller.tool.pic.list)
   app.post('/api/tool/pic/create.json', app.controller.tool.pic.create)
   app.get('/api/tool/spider/list.json', app.controller.tool.spider.list)
+  app.get('/api/tool/assets/list.json', app.controller.tool.assets.list)
+  app.post('/api/tool/assets/build.json', app.controller.tool.assets.build)
   app.get('/api/user/pubinfo.json', app.controller.user.member.pubInfo)
   app.post('/api/user/login.json', app.controller.user.member.login)
   app.get('/api/user/logout.json', app.controller.user.member.logout)
