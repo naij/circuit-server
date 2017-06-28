@@ -17,7 +17,10 @@ exports.build = function*() {
   let buildDaily = new BuildDaily(payload)
   let buildPublish = new BuildPublish(payload)
 
-  if (/daily\/[\d]*.[\d]*.[\d]*$/.test(refName)) {
+  if (/master/.test(refName) || payload.deleted) {
+    // push master 分支或者删除分支、tag不触发发布行为
+    return false
+  } else if (/daily\/[\d]*.[\d]*.[\d]*$/.test(refName)) {
     logger.info('您提交的是一个日常发布,进入日常发布流程...')
     yield buildDaily.run()
   } else if (/publish\/[\d]*.[\d]*.[\d]*$/.test(refName)) {

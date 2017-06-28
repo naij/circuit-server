@@ -39,7 +39,7 @@ exports.database = {
  * upyun 上传目录
  */
 exports.upyun = {
-  bucket: 'kiwipics',
+  bucketName: 'kiwipics',
   prefix: 'http://kiwipics.b0.upaiyun.com'
 }
 

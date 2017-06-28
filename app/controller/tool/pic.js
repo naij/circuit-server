@@ -1,14 +1,8 @@
 'use strict'
 
 let path     = require('path')
-let images   = require('images')
-let thunkify = require('thunkify')
 let Moment   = require('moment')
 let sendToWormhole = require('stream-wormhole')
-
-function upload(client, path, file, cb) {
-  client.putFile(path, file, null, null, null, cb)
-}
 
 exports.list = function*() {
   let startTime = this.query.startTime
@@ -35,15 +29,12 @@ exports.create = function*() {
     let buffer = yield this.helper.streamToBuffer(stream)
     
     // 上传到upyun
-    yield thunkify(upload)(this.upyunClient, '/c/' + picName, buffer)
-
-    // 获取图片尺寸
-    let size = images(buffer).size()
+    let resp = yield this.upyunClient.putFile('/c/' + picName, buffer)
 
     // 保存到数据库
     yield this.service.tool.pic.create({
       picPath: '/c/' + picName,
-      picSize: size.width + 'x' + size.height
+      picSize: resp.width + 'x' + resp.height
     })
   } catch(e) {
     this.app.loggers.logger.error('upyun upload error:' + e)
