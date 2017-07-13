@@ -1,5 +1,6 @@
 'use strict'
 
+let path = require('path')
 let assetsDeploy = require('assets-deploy')
 let Build = assetsDeploy.Build
 
@@ -20,25 +21,34 @@ exports.list = function*() {
 }
 
 exports.build = function*() {
-  let postData = this.request.body
-  let build = new Build(postData)
-  let refName = postData.ref.match(/refs\/(heads|tags)\/(.*)$/)[2]
+  let gitData = this.request.body
+  let appRoot = this.app.config.env === 'local' || this.app.config.env === 'unittest' ? this.app.config.baseDir : this.app.config.HOME
+  let meta = {
+    gitData: gitData,
+    logFile: path.join(appRoot, 'logs', 'assets-deploy', gitData.after + '.log'),
+    unpyunBucket: 'kiwiobjects'
+  }
+  let build = new Build(meta)
+  let refName = gitData.ref.match(/refs\/(heads|tags)\/(.*)$/)[2]
 
-  if (/(daily|publish)\/[\d]*.[\d]*.[\d]*$/.test(refName) && !postData.deleted) {
+  if (/(daily|publish)\/[\d]*.[\d]*.[\d]*$/.test(refName) && !gitData.deleted) {
+    // 创建一条发布记录
     let recordModel = yield this.service.tool.assets.createRecord({
-      sha: postData.after,
-      appName: postData.repository.name,
+      sha: gitData.after,
+      appName: gitData.repository.name,
       refName: refName
     })
 
     let execResp = yield build.run()
 
     if (execResp) {
+      // 发布成功更新状态
       yield this.service.tool.assets.updateRecord({
         id: recordModel.id,
         status: 2
       })
     } else {
+      // 发布失败更新状态
       yield this.service.tool.assets.updateRecord({
         id: recordModel.id,
         status: 0
