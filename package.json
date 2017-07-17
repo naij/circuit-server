@@ -31,7 +31,8 @@
     "spider-spa": "^1.0.5",
     "stream-wormhole": "^1.0.3",
     "child-process-promise": "^2.2.1",
-    "co-request": "^1.0.0"
+    "co-request": "^1.0.0",
+    "assets-deploy": "1.0.0"
   },
   "devDependencies": {
     "eslint": "^3.11.1",
