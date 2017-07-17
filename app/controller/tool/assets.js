@@ -49,12 +49,12 @@ exports.build = function*() {
   let remoteSecret = this.request.get('X-Hub-Signature')
   let localSecret = process.env.GITHUB_SECRET_TOKEN
 
-  return console.log(process.env.GITHUB_SECRET_TOKEN)
-
   // 对比git webhook 配置的secret，防止恶意提交
   if(!compareSecret(remoteSecret, localSecret, gitData)) {
     return
   }
+
+  return console.log(localSecret)
 
   // push master 分支或者删除分支、tag不触发发布行为
   if (/master/.test(gitData.ref) || gitData.deleted) {return}
