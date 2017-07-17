@@ -14,6 +14,7 @@ function admin(app) {
   app.post('/api/tool/pic/create.json', app.controller.tool.pic.create)
   app.get('/api/tool/spider/list.json', app.controller.tool.spider.list)
   app.get('/api/tool/assets/list.json', app.controller.tool.assets.list)
+  app.get('/api/tool/assets/detail.json', app.controller.tool.assets.detail)
   app.post('/api/tool/assets/build.json', app.controller.tool.assets.build)
   app.get('/api/user/pubinfo.json', app.controller.user.member.pubInfo)
   app.post('/api/user/login.json', app.controller.user.member.login)

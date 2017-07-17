@@ -30,6 +30,9 @@ module.exports = app => {
         offset: opt.pageSize * (opt.pageNo - 1)
       })
     }
+    * getRecordDetail(id) {
+      return yield this.app.models.assets.findById(id)
+    }
   }
 
   return Assets
