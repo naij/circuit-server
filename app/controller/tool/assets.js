@@ -54,8 +54,6 @@ exports.build = function*() {
     return
   }
 
-  return console.log(localSecret)
-
   // push master 分支或者删除分支、tag不触发发布行为
   if (/master/.test(gitData.ref) || gitData.deleted) {return}
 
