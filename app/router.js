@@ -33,6 +33,8 @@ function pages(app) {
   app.get('/manage/article/add', app.controller.page.home.index)
   app.get('/manage/article/edit', app.controller.page.home.index)
   app.get('/manage/article/recyclebin', app.controller.page.home.index)
+  app.get('/manage/assets/list', app.controller.page.home.index)
+  app.get('/manage/assets/detail', app.controller.page.home.index)
   app.get('/manage/picture/list', app.controller.page.home.index)
   app.get('/manage/spider/list', app.controller.page.home.index)
   app.get('/manage/spider/cache', app.controller.tool.spider.cache)
